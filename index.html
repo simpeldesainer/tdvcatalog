@@ -9,391 +9,285 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --black:#0E0E0E;--surface:#181818;--card:#1C1C1C;
-  --border:#2C2C2C;--gold:#C9A84C;--text:#F0EDE6;
-  --muted:#7A7570;--pill:#222220;
-}
+:root{--black:#0E0E0E;--surface:#181818;--card:#1C1C1C;--border:#2C2C2C;--gold:#C9A84C;--text:#F0EDE6;--muted:#7A7570;--pill:#222220}
 html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;
-  font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
-/* HEADER */
-header{position:sticky;top:0;z-index:100;background:rgba(14,14,14,.96);
-  backdrop-filter:blur(14px);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:20px;padding:0 32px;height:60px}
-.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:15px;
-  letter-spacing:.28em;color:var(--gold);flex-shrink:0;white-space:nowrap}
+body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+header{position:sticky;top:0;z-index:100;background:rgba(14,14,14,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:20px;padding:0 32px;height:60px}
+.logo{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:15px;letter-spacing:.28em;color:var(--gold);flex-shrink:0;white-space:nowrap}
 .logo em{color:var(--muted);font-style:normal;letter-spacing:0}
-.search-box{flex:1;max-width:300px;position:relative}
-.search-box input{width:100%;background:var(--surface);border:1px solid var(--border);
-  color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;
-  padding:7px 34px 7px 13px;border-radius:4px;outline:none;transition:border-color .2s}
-.search-box input::placeholder{color:var(--muted)}
-.search-box input:focus{border-color:var(--gold)}
-.search-box svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.sb{flex:1;max-width:300px;position:relative}
+.sb input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;font-size:13px;padding:7px 34px 7px 13px;border-radius:4px;outline:none;transition:border-color .2s}
+.sb input::placeholder{color:var(--muted)}
+.sb input:focus{border-color:var(--gold)}
+.sb svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);color:var(--muted)}
 #count{margin-left:auto;font-size:12px;color:var(--muted);white-space:nowrap}
-
-/* STRIP */
-.strip-wrap{position:sticky;top:60px;z-index:99;background:rgba(14,14,14,.93);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 24px}
+.sw{position:sticky;top:60px;z-index:99;background:rgba(14,14,14,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 24px}
 .strip{display:flex;gap:4px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
 .strip::-webkit-scrollbar{display:none}
-.pill{flex-shrink:0;background:var(--pill);border:1px solid var(--border);
-  color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400;
-  font-size:11.5px;padding:5px 14px;border-radius:100px;cursor:pointer;
-  transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;user-select:none}
+.pill{flex-shrink:0;background:var(--pill);border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:400;font-size:11.5px;padding:5px 14px;border-radius:100px;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:5px;user-select:none}
 .pill span{font-size:10px;opacity:.6}
 .pill:hover{border-color:var(--gold);color:var(--text)}
 .pill.on{background:var(--gold);border-color:var(--gold);color:#0E0E0E}
 .pill.on span{opacity:.7}
-
-/* GRID */
 main{padding:28px 32px 80px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
-
-/* CARD */
-.card{display:flex;flex-direction:column;border-radius:6px;overflow:hidden;
-  background:var(--card);border:1px solid var(--border);
-  transition:transform .22s,border-color .22s;aspect-ratio:3/4;cursor:pointer}
+.card{display:flex;flex-direction:column;border-radius:6px;overflow:hidden;background:var(--card);border:1px solid var(--border);transition:transform .22s,border-color .22s;aspect-ratio:3/4;cursor:pointer}
 .card:hover{transform:translateY(-4px);border-color:#505050}
 .card.hide{display:none}
-
-/* THUMB */
 .thumb{flex:1;position:relative;overflow:hidden;background:var(--surface)}
-.thumb img{position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;display:block;transition:transform .4s}
+.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
 .card:hover .thumb img{transform:scale(1.05)}
-.ph{position:absolute;inset:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:10px}
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
 .ph svg{opacity:.1}
 .ph span{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);opacity:.5}
-.grad{position:absolute;inset:0;
-  background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.72)100%);pointer-events:none}
-.open-btn{position:absolute;bottom:12px;right:12px;z-index:2;
-  background:var(--gold);color:#0E0E0E;font-family:'DM Sans',sans-serif;
-  font-weight:500;font-size:10px;letter-spacing:.05em;padding:5px 13px;
-  border-radius:3px;opacity:0;transform:translateY(5px);transition:opacity .2s,transform .2s}
-.card:hover .open-btn{opacity:1;transform:translateY(0)}
-
-/* META */
+.grad{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.72)100%);pointer-events:none}
+.ob{position:absolute;bottom:12px;right:12px;z-index:2;background:var(--gold);color:#0E0E0E;font-family:'DM Sans',sans-serif;font-weight:500;font-size:10px;letter-spacing:.05em;padding:5px 13px;border-radius:3px;opacity:0;transform:translateY(5px);transition:opacity .2s,transform .2s}
+.card:hover .ob{opacity:1;transform:translateY(0)}
 .meta{padding:10px 12px 12px;flex-shrink:0}
-.cat-tag{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.ct{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
 .ttl{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:15px;line-height:1.3}
-
-/* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;z-index:1000;
-  background:rgba(0,0,0,.9);backdrop-filter:blur(6px);
-  align-items:center;justify-content:center;padding:20px}
-.modal-bg.open{display:flex}
-.modal{position:relative;width:100%;max-width:960px;height:90vh;
-  background:#111;border:1px solid var(--border);border-radius:8px;
-  overflow:hidden;display:flex;flex-direction:column}
-.modal-bar{display:flex;align-items:center;justify-content:space-between;
-  padding:12px 18px;border-bottom:1px solid var(--border);flex-shrink:0;background:#0E0E0E}
-.modal-info .modal-title{font-family:'Cormorant Garamond',serif;font-weight:400;
-  font-size:17px;color:var(--text)}
-.modal-info .modal-cat{font-size:9px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--gold);margin-top:2px}
-.modal-close{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);
-  background:none;color:var(--muted);cursor:pointer;font-size:16px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  transition:border-color .15s,color .15s}
-.modal-close:hover{border-color:var(--gold);color:var(--gold)}
-.modal-frame{flex:1;position:relative;background:#1a1a1a}
-.modal-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
-.modal-loader{position:absolute;inset:0;display:flex;align-items:center;
-  justify-content:center;flex-direction:column;gap:12px;color:var(--muted)}
-.modal-loader.gone{display:none}
-.spin{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--gold);
-  border-radius:50%;animation:rot .75s linear infinite}
+.mbg{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.9);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.mbg.open{display:flex}
+.modal{position:relative;width:100%;max-width:960px;height:90vh;background:#111;border:1px solid var(--border);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
+.mbar{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;border-bottom:1px solid var(--border);flex-shrink:0;background:#0E0E0E}
+.minfo .mt{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:17px;color:var(--text)}
+.minfo .mc{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-top:2px}
+.mcl{width:32px;height:32px;border-radius:50%;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .15s,color .15s}
+.mcl:hover{border-color:var(--gold);color:var(--gold)}
+.mfr{flex:1;position:relative;background:#1a1a1a}
+.mfr iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+.ml{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--muted)}
+.ml.gone{display:none}
+.spin{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:rot .75s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
-
-/* EMPTY */
 .empty{display:none;grid-column:1/-1;text-align:center;padding:80px 0;color:var(--muted)}
 .empty.show{display:block}
 .empty p{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:300}
 .empty small{font-size:12px;margin-top:8px;display:block}
-
-@media(max-width:640px){
-  header{padding:0 16px;gap:12px}
-  .search-box{max-width:none;flex:1}
-  main{padding:16px 14px 60px}
-  .strip-wrap{padding:0 14px}
-  .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-  .modal{height:95vh}
-  .modal-bg{padding:8px}
-}
+@media(max-width:640px){header{padding:0 16px;gap:12px}.sb{max-width:none;flex:1}main{padding:16px 14px 60px}.sw{padding:0 14px}.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.modal{height:95vh}.mbg{padding:8px}}
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo">TDV <em>/</em> Catalogue Library</div>
-  <div class="search-box">
+  <div class="sb">
     <input id="search" type="text" placeholder="Search…" autocomplete="off">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
-    </svg>
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
   </div>
   <span id="count"></span>
 </header>
-
-<div class="strip-wrap"><div class="strip" id="strip"></div></div>
+<div class="sw"><div class="strip" id="strip"></div></div>
 <main><div class="grid" id="grid"></div></main>
-
-<!-- MODAL -->
-<div class="modal-bg" id="modalBg">
+<div class="mbg" id="mbg">
   <div class="modal">
-    <div class="modal-bar">
-      <div class="modal-info">
-        <div class="modal-title" id="mTitle"></div>
-        <div class="modal-cat" id="mCat"></div>
-      </div>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="mbar">
+      <div class="minfo"><div class="mt" id="mt"></div><div class="mc" id="mc"></div></div>
+      <button class="mcl" onclick="closeModal()">✕</button>
     </div>
-    <div class="modal-frame" id="mFrame">
-      <div class="modal-loader" id="mLoader">
-        <div class="spin"></div>
-        <span style="font-size:12px">Loading…</span>
-      </div>
+    <div class="mfr" id="mfr">
+      <div class="ml" id="ml"><div class="spin"></div><span style="font-size:12px">Loading…</span></div>
     </div>
   </div>
 </div>
-
 <script>
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  CATALOGUE DATA — EDIT THIS SECTION TO ADD / REMOVE ITEMS   ║
-// ║                                                              ║
-// ║  HOW TO GET FILE IDs FROM GOOGLE DRIVE:                     ║
-// ║  Right-click file → Share → Copy link                       ║
-// ║  URL looks like: drive.google.com/file/d/XXXXXXX/view       ║
-// ║  The XXXXXXX part is the File ID                            ║
-// ║                                                              ║
-// ║  thumbId → the JPEG file ID  (null = shows placeholder)     ║
-// ║  pdfId   → the PDF file ID                                  ║
-// ║                                                              ║
-// ║  CATEGORIES (use exactly as written):                       ║
-// ║  Tiles · Natural Stone · Wood · Leather · Metal · Glass     ║
-// ║  Wall Covering · Flooring · Acoustic · Carpet · Decorative  ║
-// ║  Outdoor · Furniture · Lighting · Door & Windows · Sanitary ║
+// ║  HOW TO ADD A NEW CATALOGUE                                  ║
+// ║  1. Upload PDF to Drive → right-click → Get link            ║
+// ║     URL: drive.google.com/file/d/XXXXXXX/view               ║
+// ║     XXXXXXX = the File ID                                    ║
+// ║  2. Add a line below with the correct category               ║
+// ║  3. Upload a JPEG thumbnail → get its ID → add as thumbId   ║
+// ║     (leave as null if no thumbnail yet)                      ║
 // ╚══════════════════════════════════════════════════════════════╝
 
-const CATALOGUES = [
+const C = [
 
-  // ── TILES ──────────────────────────────────────────────────
-  { title: "Resource Tiles Vol.1",           cat: "Tiles",         pdfId: "PASTE_PDF_ID_HERE",  thumbId: "PASTE_JPEG_ID_HERE" },
-  { title: "Resource Tiles Vol.3",           cat: "Tiles",         pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "New China Building Materials",   cat: "Tiles",         pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── TILES ──────────────────────────────────────────────────────
+  {t:"Resource Tiles Vol.1",          c:"Tiles",        p:"1GoaXFnk6XPi-GV4WpI6qx_XiXJooa6Cd", j:null},
+  {t:"Resource Tiles Vol.2",          c:"Tiles",        p:"1tnXgXR60NsVzBpJxQRiuyyla9rFxDU6t", j:null},
+  {t:"Resource Tiles Vol.3",          c:"Tiles",        p:"1RwySf8u6QI1a-t0EYQWfjincCKiHUK-2", j:null},
+  {t:"Mosaic Tiles Vol.1",            c:"Tiles",        p:"1OZEzEk3Qb9nbPmU_Yuvr2wxRqo66XvzH", j:null},
+  {t:"Mosaic Tiles Vol.2",            c:"Tiles",        p:"1sTCvhcqcPfaEMyrk4MtTLUaPiw3RGgnQ", j:null},
+  {t:"New China Building Materials",  c:"Tiles",        p:"1_UTtjrUx70pPBDq_xmHnWoxZTvIR-ja6", j:null},
+  {t:"Shunyang & Arredia",            c:"Tiles",        p:"1i-_S2SGJrVxCY7EoKxKbY6M-e7A4k9i-", j:null},
 
-  // ── NATURAL STONE ──────────────────────────────────────────
-  { title: "Sintered Stone Collection",      cat: "Natural Stone", pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Engineered Marble Grain Series", cat: "Natural Stone", pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Marble Particle Series",         cat: "Natural Stone", pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Terrazzo Del",                   cat: "Natural Stone", pdfId: "PASTE_PDF_ID_HERE",  thumbId: "PASTE_JPEG_ID_HERE" },
-  { title: "Tiange Products 2025",           cat: "Natural Stone", pdfId: "1h6uVYmwjlef5ex_51HRLb4wgCLIRdYB-", thumbId: null },
+  // ── NATURAL STONE ───────────────────────────────────────────────
+  {t:"Sintered Stone",                c:"Natural Stone",p:"1Fcq9ChfbwyB9Wu8hAE6UBCa8RmfVr91W", j:null},
+  {t:"Sintered Stone LR Vol.1",       c:"Natural Stone",p:"1Eg8Wl8F3XYPTjErYDEl1xjI-zZd5Qpo8", j:null},
+  {t:"Sintered Stone LR Vol.3",       c:"Natural Stone",p:"157zUo2aLcpIVyhM4Nw7PGESYqGXghUX1", j:null},
+  {t:"Terrazzo Slabs LR",             c:"Natural Stone",p:"1l6WSZvCi-4_ZfgPokser4UdIF7ePvFC7", j:null},
+  {t:"Terrazzo Slabs LR 2",           c:"Natural Stone",p:"1NsAGa8QUO80LC6h3T6CLEKTim38dk2Xm", j:null},
+  {t:"Mosaic Terrazzo",               c:"Natural Stone",p:"1-yDYPd4p4MdogmoC9gr3hhYg85u9_2Mh", j:null},
+  {t:"Terrazzo Del",                  c:"Natural Stone",p:"1WOvtK4buMBSiaopsoiMk4Usg31-ZfXLB", j:"1JB1YnS3k_7HX16WQxA-EJmXxdd6Bjfip"},
+  {t:"Terrazzo Product Portfolio",    c:"Natural Stone",p:"17aUXRVzjXr2YKpat_ExwcfUbnmnpuXTg", j:null},
+  {t:"Terrazzo Furniture",            c:"Natural Stone",p:"1fK2Cd55E5ZlVHrcedIg4ZJuFaDZoYYIy", j:null},
+  {t:"Terrazzo Sanitary",             c:"Natural Stone",p:"1HudyKIDsmkCzT-03aIxTRJfebcVvQxBd", j:null},
+  {t:"Engineered Marble Grain Series",c:"Natural Stone",p:"1igOyaDx6FFb_10FR384a26NhJe83B-yU", j:null},
+  {t:"Marble Particle Series",        c:"Natural Stone",p:"1uVVJTvAS0Xgm6BE3UeCOvCQZp9snLOfO", j:null},
+  {t:"Tiange Products 2025",          c:"Natural Stone",p:"1h6uVYmwjlef5ex_51HRLb4wgCLIRdYB-", j:null},
+  {t:"Artificial Stone 2026",         c:"Natural Stone",p:"1sXkZ5lAfV8AuT4WJ8NSDmQSOSd3ShQP-", j:null},
+  {t:"Artificial Translucent Stone",  c:"Natural Stone",p:"1hKmzioef2b2yzYtcZpAdIyRcxTfhMOVc", j:null},
+  {t:"GRC",                           c:"Natural Stone",p:"1Klc2wJdDwDWP_rIZSYRqQ1l2OV7Xl-me", j:null},
 
-  // ── WOOD ───────────────────────────────────────────────────
-  { title: "Textured Wood Panels",           cat: "Wood",          pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Solid Wood Catalogue",           cat: "Wood",          pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Wood Panels & Veneer",           cat: "Wood",          pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Wood Grain Color Card",          cat: "Wood",          pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Marquetry Flooring",             cat: "Wood",          pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── GLASS ───────────────────────────────────────────────────────
+  {t:"Fluted & Stained Glass",        c:"Glass",        p:"1lHahhSrXyJ4DJkW7GhV45HrAaUVTNQHf", j:null},
+  {t:"Glass Brick 2026",              c:"Glass",        p:"1ty_F3E2bhVuEtLqHRM9MDjgnGd3vF5ZB", j:null},
+  {t:"Glass Brick Presentation",      c:"Glass",        p:"1n-poAAa-KGY3gH5PcpJrsF6pMx700HLz", j:null},
 
-  // ── LEATHER ────────────────────────────────────────────────
-  { title: "Leather Art Collection",         cat: "Leather",       pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── METAL ───────────────────────────────────────────────────────
+  {t:"Stainless Steel Mesh",          c:"Metal",        p:"1Bro30ObRvp7lh-VYQfAB7Ws2-Wytw3Xg", j:null},
+  {t:"Stainless Steel Products",      c:"Metal",        p:"1bZjm9jGuP2L73VlW7wXSoz2chQ_NRy2u", j:null},
+  {t:"Aluminium Cladding & Ceiling",  c:"Metal",        p:"1ZrbGAdgYcGGsnSxYLXoDCn0E3zoWh348", j:null},
+  {t:"Customised Metal Works",        c:"Metal",        p:"1s1sYtcgHUdaDEYRIVqZZrHR72pxjdPvA", j:null},
+  {t:"Aluminium Profiles 2020",       c:"Metal",        p:"1kCemfnX6kiwptvzBeYpv1kAyYjJK8rXk", j:null},
+  {t:"Jingsong Aluminum 2025",        c:"Metal",        p:"1rSagARj9Lf9y2YuFovPTL9vKwe1j4l4v", j:null},
 
-  // ── METAL ──────────────────────────────────────────────────
-  { title: "Stainless Steel Products",       cat: "Metal",         pdfId: "1bZjm9jGuP2L73VlW7wXSoz2chQ_NRy2u", thumbId: null },
-  { title: "Aluminium Profiles 2020",        cat: "Metal",         pdfId: "1kCemfnX6kiwptvzBeYpv1kAyYjJK8rXk", thumbId: null },
-  { title: "Jingsong Aluminum 2025",         cat: "Metal",         pdfId: "1rSagARj9Lf9y2YuFovPTL9vKwe1j4l4v", thumbId: null },
+  // ── WOOD ────────────────────────────────────────────────────────
+  {t:"Textured Wood Panels",          c:"Wood",         p:"19mVkN2WknX-qadysJmj5zogsKKiW-f43", j:null},
+  {t:"Marquetry",                     c:"Wood",         p:"1xP8NOKhEsG7uzsKGwUMBFjoJXsvbjhsW", j:null},
+  {t:"Wood Grain Color Card",         c:"Wood",         p:"1Bl51pfhi8Q5NbErnf0-tBVSWHVuyLebO", j:null},
+  {t:"Wood Grain Catalogue",          c:"Wood",         p:"1iUQ_yLKgoJ-ruZSyWcWqjs7QJoExWxqT", j:null},
+  {t:"2025 Wood Catalogue",           c:"Wood",         p:"1ZWKRlm83Wcw5JdU1_GW9sPY86i4vHj5Z", j:null},
 
-  // ── GLASS ──────────────────────────────────────────────────
-  { title: "Glass Collection",               cat: "Glass",         pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── LEATHER ─────────────────────────────────────────────────────
+  {t:"Leather Art",                   c:"Leather",      p:"1wNAH5srEaVfoAb9g596_iHEKfNzwsnbM", j:null},
+  {t:"Leather Art Presentation",      c:"Leather",      p:"1l0_rQPTTpKCkMSH3hJFIQdaAUwzdgvwk", j:null},
 
-  // ── WALL COVERING ──────────────────────────────────────────
-  { title: "Soft Rolls Texture",             cat: "Wall Covering", pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── WALL COVERING ───────────────────────────────────────────────
+  {t:"Soft Rolls Realistic Texture — Gladdings", c:"Wall Covering", p:"1kPmmDoNM5tG5wNDPX2uXm8HbnGvXp3fq", j:null},
 
-  // ── ACOUSTIC ───────────────────────────────────────────────
-  { title: "Resource Felt Panels",           cat: "Acoustic",      pdfId: "1UjepED2XWvDvL_rMJrfijo3Rwj8Rj-ph", thumbId: null },
-  { title: "Deco Sound Acoustic",            cat: "Acoustic",      pdfId: "1VDvxbkowFs9FDj0SLvFUzNVSi-6F0Fzb", thumbId: null },
+  // ── FLOORING ────────────────────────────────────────────────────
+  {t:"Woven Vinyl Flooring",          c:"Flooring",     p:"1p3lWomj2TE3a6Wgdc7qpHVDFDtPRf4dO", j:null},
+  {t:"Woven Vinyl",                   c:"Flooring",     p:"1eDp143eE3XSmsaGJEXFKEyDQ5rsCV9CE", j:null},
 
-  // ── CARPET ─────────────────────────────────────────────────
-  { title: "Carpet Collection AW",           cat: "Carpet",        pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Carpet Collection HX",           cat: "Carpet",        pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── ACOUSTIC ────────────────────────────────────────────────────
+  {t:"Resource Felt Panels",          c:"Acoustic",     p:"1UjepED2XWvDvL_rMJrfijo3Rwj8Rj-ph", j:null},
+  {t:"Deco Sound",                    c:"Acoustic",     p:"1VDvxbkowFs9FDj0SLvFUzNVSi-6F0Fzb", j:null},
 
-  // ── DECORATIVE ─────────────────────────────────────────────
-  { title: "Gilded Panel Catalog",           cat: "Decorative",    pdfId: "1GhDbXeDKrPyjubHbXMnCX3JWNeMlSrCe", thumbId: null },
-  { title: "Fudayingjia Decorative",         cat: "Decorative",    pdfId: "1QAbML8dzwPVSQOcS29aCU5YFjaBQSYdi", thumbId: null },
-  { title: "Customised Floral Arrangements", cat: "Decorative",    pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── OUTDOOR ─────────────────────────────────────────────────────
+  {t:"Resource Outdoor",              c:"Outdoor",      p:"1dWRyS7SdokwpLBB8RrYCW867tqvM-S3i", j:null},
+  {t:"Magic Stone Landscape Furniture",c:"Outdoor",     p:"1vIVN6bQZoHIm6ip-oKQK4HzyMgt4fGmL", j:null},
 
-  // ── FURNITURE ──────────────────────────────────────────────
-  { title: "Furniture Catalogue",            cat: "Furniture",     pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Sofa Collection",                cat: "Furniture",     pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Rattan & Bamboo",                cat: "Furniture",     pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "System Carpentry",               cat: "Furniture",     pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Home Furnishing",                cat: "Furniture",     pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── DECORATIVE ──────────────────────────────────────────────────
+  {t:"Gilded Panel Catalog",          c:"Decorative",   p:"1GhDbXeDKrPyjubHbXMnCX3JWNeMlSrCe", j:null},
+  {t:"Fudayingjia",                   c:"Decorative",   p:"1QAbML8dzwPVSQOcS29aCU5YFjaBQSYdi", j:null},
+  {t:"Customised Floral Arrangements",c:"Decorative",   p:"1CiCsXVE21GPUHTR7zfUu52QOoWxP9Suk", j:null},
+  {t:"Luminous Display Pieces",       c:"Decorative",   p:"1DQyCSFrgO7YhHu8KluXRZiJwuDoifmlm", j:null},
+  {t:"Fireplace",                     c:"Decorative",   p:"1HdAhM6lEo1y-OE0exZ6xmXIMfxk0EvNk", j:null},
 
-  // ── LIGHTING ───────────────────────────────────────────────
-  { title: "Customised Lighting & Chandeliers", cat: "Lighting",   pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
-  { title: "Handmade Chandeliers",           cat: "Lighting",      pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── FURNITURE ───────────────────────────────────────────────────
+  {t:"Furniture Catalogue",           c:"Furniture",    p:"1bHgHn3lFEeTIox-NltdyTShjQARO47Hw", j:null},
+  {t:"Home Furnishing",               c:"Furniture",    p:"1wHC07r1WLqhoI6jIzawG9KgNKECNrzJD", j:null},
+  {t:"Rattan & Bamboo",               c:"Furniture",    p:"1N372O9zy5-KYVMIwmCApP8vj66DJ8zgL", j:null},
+  {t:"System Carpentry",              c:"Furniture",    p:"1LSCiNb2-BZ7f7VsM_NQk6R-GdYFrPdmw", j:null},
+  {t:"Sofa Collection",               c:"Furniture",    p:"1r6GQPAXXe6ymO1sLrfB2PPcMS9eVMHCi", j:null},
+  {t:"Sofas",                         c:"Furniture",    p:"1I85E8fGyvSXMqPxa9WFTb7EWrO3q7XIi", j:null},
+  {t:"Dining Table",                  c:"Furniture",    p:"1C_4ndYi0XadXZDtn151df8Eao3ZprtSq", j:null},
+  {t:"Stainless Steel Table Bases",   c:"Furniture",    p:"19fbek6KkCrvlho8eqjs4ay4tCCgDkyM8", j:null},
 
-  // ── DOOR & WINDOWS ─────────────────────────────────────────
-  { title: "Panoramic Sliding Door",         cat: "Door & Windows", pdfId: "1DKUAL7xltNXkrVc6RszgFxK0exijLYQY", thumbId: null },
-  { title: "Doors & Windows Brochure 2025",  cat: "Door & Windows", pdfId: "1_g7cfx7SAByPZ99LnFTjYS7AsVtKXcMo", thumbId: null },
+  // ── LIGHTING ────────────────────────────────────────────────────
+  {t:"Customised Lighting & Chandeliers", c:"Lighting", p:"1H_Bz6B-vdxChOO0pANBc2TEDWaGxQ1xU", j:null},
+  {t:"Handmade Chandeliers",          c:"Lighting",     p:"1UmtIR1dQVihYlHUjStA3_OG4EKrF9GdD", j:null},
 
-  // ── SANITARY ───────────────────────────────────────────────
-  { title: "Magic Stone Sanitary Ware",      cat: "Sanitary",      pdfId: "1Su2EAnUW2CUFnHEcD1MRkYvSKzU6tIKj", thumbId: null },
+  // ── DOOR & WINDOWS ──────────────────────────────────────────────
+  {t:"Panoramic Sliding Door — Jushang Hao",c:"Door & Windows",p:"1DKUAL7xltNXkrVc6RszgFxK0exijLYQY", j:null},
+  {t:"Doors & Windows Brochure 2025", c:"Door & Windows",p:"1_g7cfx7SAByPZ99LnFTjYS7AsVtKXcMo", j:null},
+  {t:"Aluminium Door System 2025",    c:"Door & Windows",p:"1fhqgd2UObYLH5bRGRhzT9ChU5xXyHvVQ", j:null},
+  {t:"Doors Overview",                c:"Door & Windows",p:"1qEuptRsDvYRWd1PxliLCBmGKWATXoBZd", j:null},
+  {t:"Doors",                         c:"Door & Windows",p:"1hPX7oYxNxnsdkfNQE2MmezDwN31M9es-", j:null},
+  {t:"Slimframe",                     c:"Door & Windows",p:"1B12oTQ-vondAXGw8m0k-dt5nkiwAgacu", j:null},
 
-  // ── OUTDOOR ────────────────────────────────────────────────
-  { title: "Resource Outdoor Collection",    cat: "Outdoor",       pdfId: "PASTE_PDF_ID_HERE",  thumbId: null },
+  // ── SANITARY ────────────────────────────────────────────────────
+  {t:"Magic Stone Sanitary Ware",     c:"Sanitary",     p:"1Su2EAnUW2CUFnHEcD1MRkYvSKzU6tIKj", j:null},
+  {t:"Slimframe Shower Screen",       c:"Sanitary",     p:"11dwTdtanQ0TxWnbJ0wW57-orcgRETeOW", j:null},
 
 ];
 
-// ═══════════════════════════════════════════════════════════════
-//  BELOW THIS LINE — DO NOT EDIT
-// ═══════════════════════════════════════════════════════════════
+// ── THUMBNAIL & PREVIEW URLS ──────────────────────────────────
+const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w480`;
+const prev  = id => `https://drive.google.com/file/d/${id}/preview`;
 
-const CAT_ORDER = [
-  'Tiles','Natural Stone','Wood','Leather','Metal','Glass',
-  'Wall Covering','Flooring','Acoustic','Carpet','Decorative',
-  'Outdoor','Furniture','Lighting','Door & Windows','Sanitary'
-];
+const CAT_ORDER = ['Tiles','Natural Stone','Wood','Leather','Metal','Glass','Wall Covering','Flooring','Acoustic','Outdoor','Decorative','Furniture','Lighting','Door & Windows','Sanitary'];
 
-// Drive URL builders
-const thumbUrl = id => `https://drive.google.com/thumbnail?id=${id}&sz=w480`;
-const previewUrl = id => `https://drive.google.com/file/d/${id}/preview`;
+let activeCat='All', q='';
 
-let activeCat = 'All', q = '';
-
-// ── BUILD CATEGORY STRIP ──────────────────────────────────────
-function buildStrip() {
-  const counts = {};
-  CATALOGUES.forEach(c => { counts[c.cat] = (counts[c.cat]||0)+1; });
-  const known = CAT_ORDER.filter(c => counts[c]);
-  const extra = Object.keys(counts).filter(c => !CAT_ORDER.includes(c)).sort();
-  const cats  = ['All', ...known, ...extra];
-  const strip = document.getElementById('strip');
-  cats.forEach(cat => {
-    const b = document.createElement('button');
-    b.className = 'pill' + (cat==='All'?' on':'');
-    const n = cat==='All' ? CATALOGUES.length : (counts[cat]||0);
-    b.innerHTML = `${esc(cat)} <span>${n}</span>`;
-    b.onclick = () => {
-      activeCat = cat;
-      strip.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));
-      b.classList.add('on');
-      filter();
-    };
+function buildStrip(){
+  const counts={};
+  C.forEach(d=>{counts[d.c]=(counts[d.c]||0)+1;});
+  const known=CAT_ORDER.filter(c=>counts[c]);
+  const extra=Object.keys(counts).filter(c=>!CAT_ORDER.includes(c)).sort();
+  const cats=['All',...known,...extra];
+  const strip=document.getElementById('strip');
+  cats.forEach(cat=>{
+    const b=document.createElement('button');
+    b.className='pill'+(cat==='All'?' on':'');
+    const n=cat==='All'?C.length:(counts[cat]||0);
+    b.innerHTML=`${esc(cat)} <span>${n}</span>`;
+    b.onclick=()=>{activeCat=cat;strip.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));b.classList.add('on');filter();};
     strip.appendChild(b);
   });
 }
 
-// ── BUILD GRID ────────────────────────────────────────────────
-function buildGrid() {
-  const grid = document.getElementById('grid');
-  CATALOGUES.forEach(c => {
-    if (c.pdfId === 'PASTE_PDF_ID_HERE') return; // skip empty placeholders
-
-    const div = document.createElement('div');
-    div.className = 'card';
-    div.dataset.cat   = c.cat;
-    div.dataset.title = c.title.toLowerCase();
-    div.onclick = () => openModal(c);
-
-    const thumbHtml = (c.thumbId && c.thumbId !== 'PASTE_JPEG_ID_HERE')
-      ? `<img src="${thumbUrl(c.thumbId)}" alt="${esc(c.title)}" loading="lazy"
-             onerror="this.style.display='none'">`
-      : `<div class="ph">
-           <svg width="38" height="46" viewBox="0 0 38 46" fill="none" stroke="#fff" stroke-width="1.3">
-             <rect x="1.5" y="1.5" width="35" height="43" rx="3"/>
-             <line x1="9" y1="13" x2="29" y2="13"/>
-             <line x1="9" y1="19" x2="29" y2="19"/>
-             <line x1="9" y1="25" x2="21" y2="25"/>
-           </svg>
-           <span>No thumbnail yet</span>
-         </div>`;
-
-    div.innerHTML = `
-      <div class="thumb">
-        ${thumbHtml}
-        <div class="grad"></div>
-        <div class="open-btn">View Catalogue</div>
-      </div>
-      <div class="meta">
-        <div class="cat-tag">${esc(c.cat)}</div>
-        <div class="ttl">${esc(c.title)}</div>
-      </div>`;
+function buildGrid(){
+  const grid=document.getElementById('grid');
+  C.forEach(d=>{
+    const div=document.createElement('div');
+    div.className='card';
+    div.dataset.cat=d.c;
+    div.dataset.title=d.t.toLowerCase();
+    div.onclick=()=>openModal(d);
+    const ti=d.j
+      ?`<img src="${thumb(d.j)}" alt="${esc(d.t)}" loading="lazy" onerror="this.style.display='none'">`
+      :`<div class="ph"><svg width="38" height="46" viewBox="0 0 38 46" fill="none" stroke="#fff" stroke-width="1.3"><rect x="1.5" y="1.5" width="35" height="43" rx="3"/><line x1="9" y1="13" x2="29" y2="13"/><line x1="9" y1="19" x2="29" y2="19"/><line x1="9" y1="25" x2="21" y2="25"/></svg><span>No thumbnail</span></div>`;
+    div.innerHTML=`<div class="thumb">${ti}<div class="grad"></div><div class="ob">View</div></div><div class="meta"><div class="ct">${esc(d.c)}</div><div class="ttl">${esc(d.t)}</div></div>`;
     grid.appendChild(div);
   });
-
-  const empty = document.createElement('div');
-  empty.className = 'empty'; empty.id = 'empty';
-  empty.innerHTML = '<p>No catalogues found</p><small>Try a different category or search</small>';
-  grid.appendChild(empty);
+  const e=document.createElement('div');
+  e.className='empty';e.id='empty';
+  e.innerHTML='<p>No catalogues found</p><small>Try a different category or search</small>';
+  grid.appendChild(e);
 }
 
-// ── FILTER ────────────────────────────────────────────────────
-function filter() {
-  const cards = document.querySelectorAll('.card');
-  let n = 0;
-  cards.forEach(c => {
-    const ok = (activeCat==='All' || c.dataset.cat===activeCat) &&
-               (!q || c.dataset.title.includes(q) || c.dataset.cat.toLowerCase().includes(q));
-    c.classList.toggle('hide', !ok);
-    if (ok) n++;
+function filter(){
+  const cards=document.querySelectorAll('.card');
+  let n=0;
+  cards.forEach(c=>{
+    const ok=(activeCat==='All'||c.dataset.cat===activeCat)&&(!q||c.dataset.title.includes(q)||c.dataset.cat.toLowerCase().includes(q));
+    c.classList.toggle('hide',!ok);if(ok)n++;
   });
-  document.getElementById('count').textContent = n + ' catalogue' + (n!==1?'s':'');
-  const e = document.getElementById('empty');
-  if (e) e.classList.toggle('show', n===0);
+  document.getElementById('count').textContent=n+' catalogue'+(n!==1?'s':'');
+  const e=document.getElementById('empty');if(e)e.classList.toggle('show',n===0);
 }
 
-document.getElementById('search').addEventListener('input', e => {
-  q = e.target.value.toLowerCase().trim(); filter();
-});
+document.getElementById('search').addEventListener('input',e=>{q=e.target.value.toLowerCase().trim();filter();});
 
-// ── PDF MODAL ─────────────────────────────────────────────────
-function openModal(c) {
-  document.getElementById('mTitle').textContent = c.title;
-  document.getElementById('mCat').textContent   = c.cat;
-  document.getElementById('mLoader').classList.remove('gone');
-
-  const frame = document.getElementById('mFrame');
-  const old   = frame.querySelector('iframe');
-  if (old) old.remove();
-
-  const iframe = document.createElement('iframe');
-  iframe.src   = previewUrl(c.pdfId);
-  iframe.allow = 'autoplay';
-  iframe.setAttribute('allowfullscreen','');
-  iframe.onload = () => document.getElementById('mLoader').classList.add('gone');
-  frame.appendChild(iframe);
-
-  document.getElementById('modalBg').classList.add('open');
-  document.body.style.overflow = 'hidden';
+function openModal(d){
+  document.getElementById('mt').textContent=d.t;
+  document.getElementById('mc').textContent=d.c;
+  document.getElementById('ml').classList.remove('gone');
+  const fr=document.getElementById('mfr');
+  const old=fr.querySelector('iframe');if(old)old.remove();
+  const iframe=document.createElement('iframe');
+  iframe.src=prev(d.p);iframe.allow='autoplay';iframe.setAttribute('allowfullscreen','');
+  iframe.onload=()=>document.getElementById('ml').classList.add('gone');
+  fr.appendChild(iframe);
+  document.getElementById('mbg').classList.add('open');
+  document.body.style.overflow='hidden';
 }
 
-function closeModal() {
-  document.getElementById('modalBg').classList.remove('open');
-  document.body.style.overflow = '';
-  const frame = document.getElementById('mFrame');
-  const iframe = frame.querySelector('iframe');
-  if (iframe) iframe.remove();
+function closeModal(){
+  document.getElementById('mbg').classList.remove('open');
+  document.body.style.overflow='';
+  const fr=document.getElementById('mfr');
+  const iframe=fr.querySelector('iframe');if(iframe)iframe.remove();
 }
 
-document.getElementById('modalBg').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
-document.addEventListener('keydown', e => { if (e.key==='Escape') closeModal(); });
+document.getElementById('mbg').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-// ── INIT ──────────────────────────────────────────────────────
-buildStrip();
-buildGrid();
-filter();
+buildStrip();buildGrid();filter();
 </script>
 </body>
 </html>
