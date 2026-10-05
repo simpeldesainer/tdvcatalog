@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Design Vault — Material Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-top">The Design Vault</div>
+    <a href="index.html" class="logo-main">MATERIAL <em>CATALOG</em></a>
+  </div>
+  <nav class="nav-menu">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="material.html" class="nav-link active">Materials</a>
+    <a href="product.html" class="nav-link">Products</a>
+    <a href="service.html" class="nav-link">Services</a>
+  </nav>
+  <div class="sb">
+    <input id="search" type="text" placeholder="Search materials…" autocomplete="off">
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+  </div>
+  <span id="count"></span>
+</header>
+
+<div class="sw"><div class="strip" id="strip"></div></div>
+
+<main><div class="grid" id="grid"></div></main>
+
+<div class="mbg" id="mbg">
+  <div class="modal">
+    <div class="mbar">
+      <div class="minfo"><div class="mt" id="mt"></div><div class="mc" id="mc"></div></div>
+      <button class="mcl" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mfr" id="mfr">
+      <div class="ml" id="ml"><div class="spin"></div><span style="font-size:12px">Loading PDF…</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+const C = [
+  // ── TILES ──
+  {t:"Resource Tiles Vol.1", c:"Tiles", p:"1GoaXFnk6XPi-GV4WpI6qx_XiXJooa6Cd"},
+  {t:"Resource Tiles Vol.2", c:"Tiles", p:"1tnXgXR60NsVzBpJxQRiuyyla9rFxDU6t"},
+  {t:"Resource Tiles Vol.3", c:"Tiles", p:"1RwySf8u6QI1a-t0EYQWfjincCKiHUK-2"},
+  {t:"Mosaic Tiles Vol.1", c:"Tiles", p:"1OZEzEk3Qb9nbPmU_Yuvr2wxRqo66XvzH"},
+  {t:"Mosaic Tiles Vol.2", c:"Tiles", p:"1sTCvhcqcPfaEMyrk4MtTLUaPiw3RGgnQ"},
+  {t:"New China Building Materials", c:"Tiles", p:"1_UTtjrUx70pPBDq_xmHnWoxZTvIR-ja6"},
+  {t:"Shunyang & Arredia", c:"Tiles", p:"1i-_S2SGJrVxCY7EoKxKbY6M-e7A4k9i-"},
+
+  // ── NATURAL STONE ──
+  {t:"Sintered Stone", c:"Natural Stone", p:"1Fcq9ChfbwyB9Wu8hAE6UBCa8RmfVr91W"},
+  {t:"Sintered Stone LR Vol.1", c:"Natural Stone", p:"1Eg8Wl8F3XYPTjErYDEl1xjI-zZd5Qpo8"},
+  {t:"Sintered Stone LR Vol.3", c:"Natural Stone", p:"157zUo2aLcpIVyhM4Nw7PGESYqGXghUX1"},
+  {t:"Terrazzo Slabs LR", c:"Natural Stone", p:"1l6WSZvCi-4_ZfgPokser4UdIF7ePvFC7"},
+  {t:"Terrazzo Slabs LR 2", c:"Natural Stone", p:"1NsAGa8QUO80LC6h3T6CLEKTim38dk2Xm"},
+  {t:"Mosaic Terrazzo", c:"Natural Stone", p:"1-yDYPd4p4MdogmoC9gr3hhYg85u9_2Mh"},
+  {t:"Terrazzo Del", c:"Natural Stone", p:"1WOvtK4buMBSiaopsoiMk4Usg31-ZfXLB"},
+  {t:"Terrazzo Product Portfolio", c:"Natural Stone", p:"17aUXRVzjXr2YKpat_ExwcfUbnmnpuXTg"},
+  {t:"Terrazzo Furniture", c:"Natural Stone", p:"1fK2Cd55E5ZlVHrcedIg4ZJuFaDZoYYIy"},
+  {t:"Terrazzo Sanitary", c:"Natural Stone", p:"1HudyKIDsmkCzT-03aIxTRJfebcVvQxBd"},
+  {t:"Engineered Marble Grain Series", c:"Natural Stone", p:"1igOyaDx6FFb_10FR384a26NhJe83B-yU"},
+  {t:"Marble Particle Series", c:"Natural Stone", p:"1uVVJTvAS0Xgm6BE3UeCOvCQZp9snLOfO"},
+  {t:"Tiange Products 2025", c:"Natural Stone", p:"1h6uVYmwjlef5ex_51HRLb4wgCLIRdYB-"},
+  {t:"Artificial Stone 2026", c:"Natural Stone", p:"1sXkZ5lAfV8AuT4WJ8NSDmQSOSd3ShQP-"},
+  {t:"Artificial Translucent Stone", c:"Natural Stone", p:"1hKmzioef2b2yzYtcZpAdIyRcxTfhMOVc"},
+  {t:"GRC", c:"Natural Stone", p:"1Klc2wJdDwDWP_rIZSYRqQ1l2OV7Xl-me"},
+
+  // ── GLASS ──
+  {t:"Fluted & Stained Glass", c:"Glass", p:"1lHahhSrXyJ4DJkW7GhV45HrAaUVTNQHf"},
+  {t:"Glass Brick 2026", c:"Glass", p:"1ty_F3E2bhVuEtLqHRM9MDjgnGd3vF5ZB"},
+  {t:"Glass Brick Presentation", c:"Glass", p:"1n-poAAa-KGY3gH5PcpJrsF6pMx700HLz"},
+
+  // ── METAL ──
+  {t:"Stainless Steel Mesh", c:"Metal", p:"1Bro30ObRvp7lh-VYQfAB7Ws2-Wytw3Xg"},
+  {t:"Stainless Steel Products", c:"Metal", p:"1bZjm9jGuP2L73VlW7wXSoz2chQ_NRy2u"},
+  {t:"Aluminium Cladding & Ceiling", c:"Metal", p:"1ZrbGAdgYcGGsnSxYLXoDCn0E3zoWh348"},
+  {t:"Customised Metal Works", c:"Metal", p:"1s1sYtcgHUdaDEYRIVqZZrHR72pxjdPvA"},
+  {t:"Aluminium Profiles 2020", c:"Metal", p:"1kCemfnX6kiwptvzBeYpv1kAyYjJK8rXk"},
+  {t:"Jingsong Aluminum 2025", c:"Metal", p:"1rSagARj9Lf9y2YuFovPTL9vKwe1j4l4v"},
+
+  // ── WOOD ──
+  {t:"Textured Wood Panels", c:"Wood", p:"19mVkN2WknX-qadysJmj5zogsKKiW-f43"},
+  {t:"Marquetry", c:"Wood", p:"1xP8NOKhEsG7uzsKGwUMBFjoJXsvbjhsW"},
+  {t:"Wood Grain Color Card", c:"Wood", p:"1Bl51pfhi8Q5NbErnf0-tBVSWHVuyLebO"},
+  {t:"Wood Grain Catalogue", c:"Wood", p:"1iUQ_yLKgoJ-ruZSyWcWqjs7QJoExWxqT"},
+  {t:"2025 Wood Catalogue", c:"Wood", p:"1ZWKRlm83Wcw5JdU1_GW9sPY86i4vHj5Z"},
+
+  // ── LEATHER ──
+  {t:"Leather Art", c:"Leather", p:"1wNAH5srEaVfoAb9g596_iHEKfNzwsnbM"},
+  {t:"Leather Art Presentation", c:"Leather", p:"1l0_rQPTTpKCkMSH3hJFIQdaAUwzdgvwk"},
+
+  // ── WALL COVERING ──
+  {t:"Soft Rolls Realistic Texture — Gladdings", c:"Wall Covering", p:"1kPmmDoNM5tG5wNDPX2uXm8HbnGvXp3fq"},
+
+  // ── FLOORING ──
+  {t:"Woven Vinyl Flooring", c:"Flooring", p:"1p3lWomj2TE3a6Wgdc7qpHVDFDtPRf4dO"},
+  {t:"Woven Vinyl", c:"Flooring", p:"1eDp143eE3XSmsaGJEXFKEyDQ5rsCV9CE"},
+
+  // ── ACOUSTIC ──
+  {t:"Resource Felt Panels", c:"Acoustic", p:"1UjepED2XWvDvL_rMJrfijo3Rwj8Rj-ph"},
+  {t:"Deco Sound", c:"Acoustic", p:"1VDvxbkowFs9FDj0SLvFUzNVSi-6F0Fzb"},
+
+  // ── OUTDOOR ──
+  {t:"Resource Outdoor", c:"Outdoor", p:"1dWRyS7SdokwpLBB8RrYCW867tqvM-S3i"},
+  {t:"Magic Stone Landscape Furniture", c:"Outdoor", p:"1vIVN6bQZoHIm6ip-oKQK4HzyMgt4fGmL"},
+
+  // ── DECORATIVE ──
+  {t:"Gilded Panel Catalog", c:"Decorative", p:"1GhDbXeDKrPyjubHbXMnCX3JWNeMlSrCe"},
+  {t:"Fudayingjia", c:"Decorative", p:"1QAbML8dzwPVSQOcS29aCU5YFjaBQSYdi"},
+  {t:"Customised Floral Arrangements", c:"Decorative", p:"1CiCsXVE21GPUHTR7zfUu52QOoWxP9Suk"},
+  {t:"Luminous Display Pieces", c:"Decorative", p:"1DQyCSFrgO7YhHu8KluXRZiJwuDoifmlm"},
+  {t:"Fireplace", c:"Decorative", p:"1HdAhM6lEo1y-OE0exZ6xmXIMfxk0EvNk"}
+];
+
+const CAT_ORDER = ['Tiles','Natural Stone','Wood','Leather','Metal','Glass','Wall Covering','Flooring','Acoustic','Outdoor','Decorative'];
+
+buildStrip(C, CAT_ORDER);
+buildGrid(C);
+filter(C);
+initSearch(C);
+</script>
+</body>
+</html>

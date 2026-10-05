@@ -3,321 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Design Vault — Catalogue Library</title>
+<title>The Design Vault — Main Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --black:#181818;
-  --surface:#202020;
-  --card:#242424;
-  --border:#303030;
-  --gold:#C4872A;
-  --gold-lt:#D9A050;
-  --text:#FFFFFF;
-  --muted:#888888;
-  --pill:#282828;
-}
-html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--text);font-family:'Barlow',sans-serif;font-weight:400;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-
-/* HEADER */
-header{position:sticky;top:0;z-index:100;background:rgba(24,24,24,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:24px;padding:0 32px;height:64px}
-.logo{display:flex;flex-direction:column;flex-shrink:0;white-space:nowrap;line-height:1;gap:1px}
-.logo-top{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
-.logo-main{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;letter-spacing:.08em;text-transform:uppercase;color:var(--text)}
-.logo-main em{color:var(--gold);font-style:normal}
-.logo-sub{font-family:'Barlow',sans-serif;font-weight:300;font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)}
-.sb{flex:1;max-width:320px;position:relative}
-.sb input{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Barlow',sans-serif;font-weight:400;font-size:13px;letter-spacing:.02em;padding:8px 36px 8px 14px;border-radius:2px;outline:none;transition:border-color .2s}
-.sb input::placeholder{color:var(--muted)}
-.sb input:focus{border-color:var(--gold)}
-.sb svg{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
-#count{margin-left:auto;font-family:'Barlow',sans-serif;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
-
-/* CATEGORY STRIP */
-.sw{position:sticky;top:64px;z-index:99;background:rgba(24,24,24,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 32px}
-.strip{display:flex;gap:6px;overflow-x:auto;padding:11px 0;scrollbar-width:none}
-.strip::-webkit-scrollbar{display:none}
-.pill{flex-shrink:0;background:transparent;border:1px solid var(--border);color:var(--muted);font-family:'Barlow',sans-serif;font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 16px;border-radius:2px;cursor:pointer;transition:all .15s;white-space:nowrap;display:flex;align-items:center;gap:6px;user-select:none}
-.pill span{font-size:10px;font-weight:400;opacity:.55}
-.pill:hover{border-color:var(--gold);color:var(--text)}
-.pill.on{background:var(--gold);border-color:var(--gold);color:#000;font-weight:600}
-.pill.on span{opacity:.7}
-
-/* GRID */
-main{padding:32px 32px 80px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2px}
-
-/* CARD */
-.card{display:flex;flex-direction:column;overflow:hidden;background:var(--card);transition:opacity .2s;aspect-ratio:3/4;cursor:pointer;position:relative}
-.card:hover{opacity:.88}
-.card:hover .thumb img{transform:scale(1.04)}
-.card:hover .ob{opacity:1;transform:translateY(0)}
-.card.hide{display:none}
-.thumb{flex:1;position:relative;overflow:hidden;background:var(--surface)}
-.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
-.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--surface)}
-.ph svg{opacity:.08}
-.ph span{font-family:'Barlow',sans-serif;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);opacity:.4}
-.grad{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.85)100%);pointer-events:none}
-.ob{position:absolute;bottom:52px;left:50%;transform:translateX(-50%) translateY(6px);z-index:2;background:var(--gold);color:#000;font-family:'Barlow',sans-serif;font-weight:600;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:7px 20px;border-radius:1px;opacity:0;white-space:nowrap;transition:opacity .2s,transform .2s}
-.meta{padding:12px 14px 14px;flex-shrink:0;background:var(--card);border-top:1px solid var(--border)}
-.ct{font-family:'Barlow',sans-serif;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:5px}
-.ttl{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:16px;letter-spacing:.02em;text-transform:uppercase;line-height:1.2;color:var(--text)}
-
-/* MODAL */
-.mbg{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px}
-.mbg.open{display:flex}
-.modal{position:relative;width:100%;max-width:980px;height:90vh;background:#1e1e1e;border:1px solid var(--border);border-radius:0;overflow:hidden;display:flex;flex-direction:column}
-.mbar{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0;background:#181818}
-.minfo .mt{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:.05em;text-transform:uppercase;color:var(--text)}
-.minfo .mc{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-top:3px}
-.mcl{width:32px;height:32px;border-radius:2px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .15s,color .15s}
-.mcl:hover{border-color:var(--gold);color:var(--gold)}
-.mfr{flex:1;position:relative;background:#1a1a1a}
-.mfr iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
-.ml{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--muted)}
-.ml.gone{display:none}
-.spin{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:rot .75s linear infinite}
-@keyframes rot{to{transform:rotate(360deg)}}
-.empty{display:none;grid-column:1/-1;text-align:center;padding:80px 0;color:var(--muted)}
-.empty.show{display:block}
-.empty p{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:24px;letter-spacing:.06em;text-transform:uppercase}
-.empty small{font-size:12px;margin-top:8px;display:block;letter-spacing:.06em}
-@media(max-width:640px){header{padding:0 16px;gap:12px}.sb{max-width:none;flex:1}main{padding:20px 0 60px}.sw{padding:0 16px}.grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:2px}.modal{height:95vh}.mbg{padding:8px}}
-</style>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
 <header>
   <div class="logo">
     <div class="logo-top">The Design Vault</div>
-    <div class="logo-main">CATALOGUE <em>LIBRARY</em></div>
+    <a href="index.html" class="logo-main">CATALOGUE <em>LIBRARY</em></a>
   </div>
-  <div class="sb">
-    <input id="search" type="text" placeholder="Search…" autocomplete="off">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-  </div>
-  <span id="count"></span>
+  <nav class="nav-menu">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="material.html" class="nav-link">Materials</a>
+    <a href="product.html" class="nav-link">Products</a>
+    <a href="service.html" class="nav-link">Services</a>
+  </nav>
 </header>
-<div class="sw"><div class="strip" id="strip"></div></div>
-<main><div class="grid" id="grid"></div></main>
-<div class="mbg" id="mbg">
-  <div class="modal">
-    <div class="mbar">
-      <div class="minfo"><div class="mt" id="mt"></div><div class="mc" id="mc"></div></div>
-      <button class="mcl" onclick="closeModal()">✕</button>
-    </div>
-    <div class="mfr" id="mfr">
-      <div class="ml" id="ml"><div class="spin"></div><span style="font-size:12px">Loading…</span></div>
-    </div>
+
+<main class="hero-container">
+  <h1 class="hero-title">Select Section</h1>
+
+  <div class="portal-grid">
+    <!-- 1. MATERIAL CATALOG THUMBNAIL -->
+    <a href="material.html" class="portal-card">
+      <div class="portal-img">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" alt="Materials">
+      </div>
+      <div class="portal-info">
+        <div class="portal-title">1. Material Catalog</div>
+        <div class="portal-desc">Browse architectural materials including Tiles, Natural Stone, Wood, Metal, Glass, and Wall Coverings.</div>
+      </div>
+    </a>
+
+    <!-- 2. PRODUCT CATALOG THUMBNAIL -->
+    <a href="product.html" class="portal-card">
+      <div class="portal-img">
+        <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80" alt="Products">
+      </div>
+      <div class="portal-info">
+        <div class="portal-title">2. Product Catalogs</div>
+        <div class="portal-desc">Access PDF documentation for Furniture, Custom Lighting, Doors, Windows, and Sanitary Fixtures.</div>
+      </div>
+    </a>
+
+    <!-- 3. SERVICE THUMBNAIL -->
+    <a href="service.html" class="portal-card">
+      <div class="portal-img">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=800&q=80" alt="Services">
+      </div>
+      <div class="portal-info">
+        <div class="portal-title">3. Services</div>
+        <div class="portal-desc">Explore tailored architectural Shopdrawing drafting and high-end 3D Visual Rendering services.</div>
+      </div>
+    </a>
   </div>
-</div>
-<script>
-// ╔══════════════════════════════════════════════════════════════╗
-// ║  HOW TO ADD A NEW CATALOGUE                                  ║
-// ║  1. Upload PDF to Drive → right-click → Get link            ║
-// ║     URL: drive.google.com/file/d/XXXXXXX/view               ║
-// ║     XXXXXXX = the File ID                                    ║
-// ║  2. Add a line below with the correct category               ║
-// ║  3. Upload a JPEG thumbnail → get its ID → add as thumbId   ║
-// ║     (leave as null if no thumbnail yet)                      ║
-// ╚══════════════════════════════════════════════════════════════╝
+</main>
 
-const C = [
-
-  // ── TILES ──────────────────────────────────────────────────────
-  {t:"Resource Tiles Vol.1",          c:"Tiles",        p:"1GoaXFnk6XPi-GV4WpI6qx_XiXJooa6Cd", j:null},
-  {t:"Resource Tiles Vol.2",          c:"Tiles",        p:"1tnXgXR60NsVzBpJxQRiuyyla9rFxDU6t", j:null},
-  {t:"Resource Tiles Vol.3",          c:"Tiles",        p:"1RwySf8u6QI1a-t0EYQWfjincCKiHUK-2", j:null},
-  {t:"Mosaic Tiles Vol.1",            c:"Tiles",        p:"1OZEzEk3Qb9nbPmU_Yuvr2wxRqo66XvzH", j:null},
-  {t:"Mosaic Tiles Vol.2",            c:"Tiles",        p:"1sTCvhcqcPfaEMyrk4MtTLUaPiw3RGgnQ", j:null},
-  {t:"New China Building Materials",  c:"Tiles",        p:"1_UTtjrUx70pPBDq_xmHnWoxZTvIR-ja6", j:null},
-  {t:"Shunyang & Arredia",            c:"Tiles",        p:"1i-_S2SGJrVxCY7EoKxKbY6M-e7A4k9i-", j:null},
-
-  // ── NATURAL STONE ───────────────────────────────────────────────
-  {t:"Sintered Stone",                c:"Natural Stone",p:"1Fcq9ChfbwyB9Wu8hAE6UBCa8RmfVr91W", j:null},
-  {t:"Sintered Stone LR Vol.1",       c:"Natural Stone",p:"1Eg8Wl8F3XYPTjErYDEl1xjI-zZd5Qpo8", j:null},
-  {t:"Sintered Stone LR Vol.3",       c:"Natural Stone",p:"157zUo2aLcpIVyhM4Nw7PGESYqGXghUX1", j:null},
-  {t:"Terrazzo Slabs LR",             c:"Natural Stone",p:"1l6WSZvCi-4_ZfgPokser4UdIF7ePvFC7", j:null},
-  {t:"Terrazzo Slabs LR 2",           c:"Natural Stone",p:"1NsAGa8QUO80LC6h3T6CLEKTim38dk2Xm", j:null},
-  {t:"Mosaic Terrazzo",               c:"Natural Stone",p:"1-yDYPd4p4MdogmoC9gr3hhYg85u9_2Mh", j:null},
-  {t:"Terrazzo Del",                  c:"Natural Stone",p:"1WOvtK4buMBSiaopsoiMk4Usg31-ZfXLB", j:"1JB1YnS3k_7HX16WQxA-EJmXxdd6Bjfip"},
-  {t:"Terrazzo Product Portfolio",    c:"Natural Stone",p:"17aUXRVzjXr2YKpat_ExwcfUbnmnpuXTg", j:null},
-  {t:"Terrazzo Furniture",            c:"Natural Stone",p:"1fK2Cd55E5ZlVHrcedIg4ZJuFaDZoYYIy", j:null},
-  {t:"Terrazzo Sanitary",             c:"Natural Stone",p:"1HudyKIDsmkCzT-03aIxTRJfebcVvQxBd", j:null},
-  {t:"Engineered Marble Grain Series",c:"Natural Stone",p:"1igOyaDx6FFb_10FR384a26NhJe83B-yU", j:null},
-  {t:"Marble Particle Series",        c:"Natural Stone",p:"1uVVJTvAS0Xgm6BE3UeCOvCQZp9snLOfO", j:null},
-  {t:"Tiange Products 2025",          c:"Natural Stone",p:"1h6uVYmwjlef5ex_51HRLb4wgCLIRdYB-", j:null},
-  {t:"Artificial Stone 2026",         c:"Natural Stone",p:"1sXkZ5lAfV8AuT4WJ8NSDmQSOSd3ShQP-", j:null},
-  {t:"Artificial Translucent Stone",  c:"Natural Stone",p:"1hKmzioef2b2yzYtcZpAdIyRcxTfhMOVc", j:null},
-  {t:"GRC",                           c:"Natural Stone",p:"1Klc2wJdDwDWP_rIZSYRqQ1l2OV7Xl-me", j:null},
-
-  // ── GLASS ───────────────────────────────────────────────────────
-  {t:"Fluted & Stained Glass",        c:"Glass",        p:"1lHahhSrXyJ4DJkW7GhV45HrAaUVTNQHf", j:null},
-  {t:"Glass Brick 2026",              c:"Glass",        p:"1ty_F3E2bhVuEtLqHRM9MDjgnGd3vF5ZB", j:null},
-  {t:"Glass Brick Presentation",      c:"Glass",        p:"1n-poAAa-KGY3gH5PcpJrsF6pMx700HLz", j:null},
-
-  // ── METAL ───────────────────────────────────────────────────────
-  {t:"Stainless Steel Mesh",          c:"Metal",        p:"1Bro30ObRvp7lh-VYQfAB7Ws2-Wytw3Xg", j:null},
-  {t:"Stainless Steel Products",      c:"Metal",        p:"1bZjm9jGuP2L73VlW7wXSoz2chQ_NRy2u", j:null},
-  {t:"Aluminium Cladding & Ceiling",  c:"Metal",        p:"1ZrbGAdgYcGGsnSxYLXoDCn0E3zoWh348", j:null},
-  {t:"Customised Metal Works",        c:"Metal",        p:"1s1sYtcgHUdaDEYRIVqZZrHR72pxjdPvA", j:null},
-  {t:"Aluminium Profiles 2020",       c:"Metal",        p:"1kCemfnX6kiwptvzBeYpv1kAyYjJK8rXk", j:null},
-  {t:"Jingsong Aluminum 2025",        c:"Metal",        p:"1rSagARj9Lf9y2YuFovPTL9vKwe1j4l4v", j:null},
-
-  // ── WOOD ────────────────────────────────────────────────────────
-  {t:"Textured Wood Panels",          c:"Wood",         p:"19mVkN2WknX-qadysJmj5zogsKKiW-f43", j:null},
-  {t:"Marquetry",                     c:"Wood",         p:"1xP8NOKhEsG7uzsKGwUMBFjoJXsvbjhsW", j:null},
-  {t:"Wood Grain Color Card",         c:"Wood",         p:"1Bl51pfhi8Q5NbErnf0-tBVSWHVuyLebO", j:null},
-  {t:"Wood Grain Catalogue",          c:"Wood",         p:"1iUQ_yLKgoJ-ruZSyWcWqjs7QJoExWxqT", j:null},
-  {t:"2025 Wood Catalogue",           c:"Wood",         p:"1ZWKRlm83Wcw5JdU1_GW9sPY86i4vHj5Z", j:null},
-
-  // ── LEATHER ─────────────────────────────────────────────────────
-  {t:"Leather Art",                   c:"Leather",      p:"1wNAH5srEaVfoAb9g596_iHEKfNzwsnbM", j:null},
-  {t:"Leather Art Presentation",      c:"Leather",      p:"1l0_rQPTTpKCkMSH3hJFIQdaAUwzdgvwk", j:null},
-
-  // ── WALL COVERING ───────────────────────────────────────────────
-  {t:"Soft Rolls Realistic Texture — Gladdings", c:"Wall Covering", p:"1kPmmDoNM5tG5wNDPX2uXm8HbnGvXp3fq", j:null},
-
-  // ── FLOORING ────────────────────────────────────────────────────
-  {t:"Woven Vinyl Flooring",          c:"Flooring",     p:"1p3lWomj2TE3a6Wgdc7qpHVDFDtPRf4dO", j:null},
-  {t:"Woven Vinyl",                   c:"Flooring",     p:"1eDp143eE3XSmsaGJEXFKEyDQ5rsCV9CE", j:null},
-
-  // ── ACOUSTIC ────────────────────────────────────────────────────
-  {t:"Resource Felt Panels",          c:"Acoustic",     p:"1UjepED2XWvDvL_rMJrfijo3Rwj8Rj-ph", j:null},
-  {t:"Deco Sound",                    c:"Acoustic",     p:"1VDvxbkowFs9FDj0SLvFUzNVSi-6F0Fzb", j:null},
-
-  // ── OUTDOOR ─────────────────────────────────────────────────────
-  {t:"Resource Outdoor",              c:"Outdoor",      p:"1dWRyS7SdokwpLBB8RrYCW867tqvM-S3i", j:null},
-  {t:"Magic Stone Landscape Furniture",c:"Outdoor",     p:"1vIVN6bQZoHIm6ip-oKQK4HzyMgt4fGmL", j:null},
-
-  // ── DECORATIVE ──────────────────────────────────────────────────
-  {t:"Gilded Panel Catalog",          c:"Decorative",   p:"1GhDbXeDKrPyjubHbXMnCX3JWNeMlSrCe", j:null},
-  {t:"Fudayingjia",                   c:"Decorative",   p:"1QAbML8dzwPVSQOcS29aCU5YFjaBQSYdi", j:null},
-  {t:"Customised Floral Arrangements",c:"Decorative",   p:"1CiCsXVE21GPUHTR7zfUu52QOoWxP9Suk", j:null},
-  {t:"Luminous Display Pieces",       c:"Decorative",   p:"1DQyCSFrgO7YhHu8KluXRZiJwuDoifmlm", j:null},
-  {t:"Fireplace",                     c:"Decorative",   p:"1HdAhM6lEo1y-OE0exZ6xmXIMfxk0EvNk", j:null},
-
-  // ── FURNITURE ───────────────────────────────────────────────────
-  {t:"Furniture Catalogue",           c:"Furniture",    p:"1bHgHn3lFEeTIox-NltdyTShjQARO47Hw", j:null},
-  {t:"Home Furnishing",               c:"Furniture",    p:"1wHC07r1WLqhoI6jIzawG9KgNKECNrzJD", j:null},
-  {t:"Rattan & Bamboo",               c:"Furniture",    p:"1N372O9zy5-KYVMIwmCApP8vj66DJ8zgL", j:null},
-  {t:"System Carpentry",              c:"Furniture",    p:"1LSCiNb2-BZ7f7VsM_NQk6R-GdYFrPdmw", j:null},
-  {t:"Sofa Collection",               c:"Furniture",    p:"1r6GQPAXXe6ymO1sLrfB2PPcMS9eVMHCi", j:null},
-  {t:"Sofas",                         c:"Furniture",    p:"1I85E8fGyvSXMqPxa9WFTb7EWrO3q7XIi", j:null},
-  {t:"Dining Table",                  c:"Furniture",    p:"1C_4ndYi0XadXZDtn151df8Eao3ZprtSq", j:null},
-  {t:"Stainless Steel Table Bases",   c:"Furniture",    p:"19fbek6KkCrvlho8eqjs4ay4tCCgDkyM8", j:null},
-
-  // ── LIGHTING ────────────────────────────────────────────────────
-  {t:"Customised Lighting & Chandeliers", c:"Lighting", p:"1H_Bz6B-vdxChOO0pANBc2TEDWaGxQ1xU", j:null},
-  {t:"Handmade Chandeliers",          c:"Lighting",     p:"1UmtIR1dQVihYlHUjStA3_OG4EKrF9GdD", j:null},
-
-  // ── DOOR & WINDOWS ──────────────────────────────────────────────
-  {t:"Panoramic Sliding Door — Jushang Hao",c:"Door & Windows",p:"1DKUAL7xltNXkrVc6RszgFxK0exijLYQY", j:null},
-  {t:"Doors & Windows Brochure 2025", c:"Door & Windows",p:"1_g7cfx7SAByPZ99LnFTjYS7AsVtKXcMo", j:null},
-  {t:"Aluminium Door System 2025",    c:"Door & Windows",p:"1fhqgd2UObYLH5bRGRhzT9ChU5xXyHvVQ", j:null},
-  {t:"Doors Overview",                c:"Door & Windows",p:"1qEuptRsDvYRWd1PxliLCBmGKWATXoBZd", j:null},
-  {t:"Doors",                         c:"Door & Windows",p:"1hPX7oYxNxnsdkfNQE2MmezDwN31M9es-", j:null},
-  {t:"Slimframe",                     c:"Door & Windows",p:"1B12oTQ-vondAXGw8m0k-dt5nkiwAgacu", j:null},
-
-  // ── SANITARY ────────────────────────────────────────────────────
-  {t:"Magic Stone Sanitary Ware",     c:"Sanitary",     p:"1Su2EAnUW2CUFnHEcD1MRkYvSKzU6tIKj", j:null},
-  {t:"Slimframe Shower Screen",       c:"Sanitary",     p:"11dwTdtanQ0TxWnbJ0wW57-orcgRETeOW", j:null},
-
-];
-
-// ── THUMBNAIL & PREVIEW URLS ──────────────────────────────────
-const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
-const prev  = id => `https://drive.google.com/file/d/${id}/preview`;
-
-const CAT_ORDER = ['Tiles','Natural Stone','Wood','Leather','Metal','Glass','Wall Covering','Flooring','Acoustic','Outdoor','Decorative','Furniture','Lighting','Door & Windows','Sanitary'];
-
-let activeCat='All', q='';
-
-function buildStrip(){
-  const counts={};
-  C.forEach(d=>{counts[d.c]=(counts[d.c]||0)+1;});
-  const known=CAT_ORDER.filter(c=>counts[c]);
-  const extra=Object.keys(counts).filter(c=>!CAT_ORDER.includes(c)).sort();
-  const cats=['All',...known,...extra];
-  const strip=document.getElementById('strip');
-  cats.forEach(cat=>{
-    const b=document.createElement('button');
-    b.className='pill'+(cat==='All'?' on':'');
-    const n=cat==='All'?C.length:(counts[cat]||0);
-    b.innerHTML=`${esc(cat)} <span>${n}</span>`;
-    b.onclick=()=>{activeCat=cat;strip.querySelectorAll('.pill').forEach(p=>p.classList.remove('on'));b.classList.add('on');filter();};
-    strip.appendChild(b);
-  });
-}
-
-function buildGrid(){
-  const grid=document.getElementById('grid');
-  C.forEach(d=>{
-    const div=document.createElement('div');
-    div.className='card';
-    div.dataset.cat=d.c;
-    div.dataset.title=d.t.toLowerCase();
-    div.onclick=()=>openModal(d);
-    // ph placeholder always in DOM underneath; img on top — if load fails, img hides itself
-    div.innerHTML=`<div class="thumb">
-      <div class="ph"><svg width="38" height="46" viewBox="0 0 38 46" fill="none" stroke="#fff" stroke-width="1.3"><rect x="1.5" y="1.5" width="35" height="43" rx="3"/><line x1="9" y1="13" x2="29" y2="13"/><line x1="9" y1="19" x2="29" y2="19"/><line x1="9" y1="25" x2="21" y2="25"/></svg><span>No thumbnail</span></div>
-      <img src="${thumb(d.p)}" alt="${esc(d.t)}" loading="lazy">
-      <div class="grad"></div><div class="ob">View</div>
-    </div><div class="meta"><div class="ct">${esc(d.c)}</div><div class="ttl">${esc(d.t)}</div></div>`;
-    // Attach error handler via JS — avoids double-quote conflicts in inline HTML
-    div.querySelector('img').addEventListener('error', function(){ this.style.display='none'; });
-    grid.appendChild(div);
-  });
-  const e=document.createElement('div');
-  e.className='empty';e.id='empty';
-  e.innerHTML='<p>No catalogues found</p><small>Try a different category or search</small>';
-  grid.appendChild(e);
-}
-
-function filter(){
-  const cards=document.querySelectorAll('.card');
-  let n=0;
-  cards.forEach(c=>{
-    const ok=(activeCat==='All'||c.dataset.cat===activeCat)&&(!q||c.dataset.title.includes(q)||c.dataset.cat.toLowerCase().includes(q));
-    c.classList.toggle('hide',!ok);if(ok)n++;
-  });
-  document.getElementById('count').textContent=n+' catalogue'+(n!==1?'s':'');
-  const e=document.getElementById('empty');if(e)e.classList.toggle('show',n===0);
-}
-
-document.getElementById('search').addEventListener('input',e=>{q=e.target.value.toLowerCase().trim();filter();});
-
-function openModal(d){
-  document.getElementById('mt').textContent=d.t;
-  document.getElementById('mc').textContent=d.c;
-  document.getElementById('ml').classList.remove('gone');
-  const fr=document.getElementById('mfr');
-  const old=fr.querySelector('iframe');if(old)old.remove();
-  const iframe=document.createElement('iframe');
-  iframe.src=prev(d.p);iframe.allow='autoplay';iframe.setAttribute('allowfullscreen','');
-  iframe.onload=()=>document.getElementById('ml').classList.add('gone');
-  fr.appendChild(iframe);
-  document.getElementById('mbg').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-
-function closeModal(){
-  document.getElementById('mbg').classList.remove('open');
-  document.body.style.overflow='';
-  const fr=document.getElementById('mfr');
-  const iframe=fr.querySelector('iframe');if(iframe)iframe.remove();
-}
-
-document.getElementById('mbg').addEventListener('click',function(e){if(e.target===this)closeModal();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
-
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-
-buildStrip();buildGrid();filter();
-</script>
 </body>
 </html>

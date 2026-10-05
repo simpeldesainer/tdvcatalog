@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Design Vault — Product Catalogs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-top">The Design Vault</div>
+    <a href="index.html" class="logo-main">PRODUCT <em>CATALOGS</em></a>
+  </div>
+  <nav class="nav-menu">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="material.html" class="nav-link">Materials</a>
+    <a href="product.html" class="nav-link active">Products</a>
+    <a href="service.html" class="nav-link">Services</a>
+  </nav>
+  <div class="sb">
+    <input id="search" type="text" placeholder="Search products…" autocomplete="off">
+    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+  </div>
+  <span id="count"></span>
+</header>
+
+<div class="sw"><div class="strip" id="strip"></div></div>
+
+<main><div class="grid" id="grid"></div></main>
+
+<div class="mbg" id="mbg">
+  <div class="modal">
+    <div class="mbar">
+      <div class="minfo"><div class="mt" id="mt"></div><div class="mc" id="mc"></div></div>
+      <button class="mcl" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mfr" id="mfr">
+      <div class="ml" id="ml"><div class="spin"></div><span style="font-size:12px">Loading PDF…</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+<script>
+const C = [
+  // ── FURNITURE ──
+  {t:"Furniture Catalogue", c:"Furniture", p:"1bHgHn3lFEeTIox-NltdyTShjQARO47Hw"},
+  {t:"Home Furnishing", c:"Furniture", p:"1wHC07r1WLqhoI6jIzawG9KgNKECNrzJD"},
+  {t:"Rattan & Bamboo", c:"Furniture", p:"1N372O9zy5-KYVMIwmCApP8vj66DJ8zgL"},
+  {t:"System Carpentry", c:"Furniture", p:"1LSCiNb2-BZ7f7VsM_NQk6R-GdYFrPdmw"},
+  {t:"Sofa Collection", c:"Furniture", p:"1r6GQPAXXe6ymO1sLrfB2PPcMS9eVMHCi"},
+  {t:"Sofas", c:"Furniture", p:"1I85E8fGyvSXMqPxa9WFTb7EWrO3q7XIi"},
+  {t:"Dining Table", c:"Furniture", p:"1C_4ndYi0XadXZDtn151df8Eao3ZprtSq"},
+  {t:"Stainless Steel Table Bases", c:"Furniture", p:"19fbek6KkCrvlho8eqjs4ay4tCCgDkyM8"},
+
+  // ── LIGHTING ──
+  {t:"Customised Lighting & Chandeliers", c:"Lighting", p:"1H_Bz6B-vdxChOO0pANBc2TEDWaGxQ1xU"},
+  {t:"Handmade Chandeliers", c:"Lighting", p:"1UmtIR1dQVihYlHUjStA3_OG4EKrF9GdD"},
+
+  // ── DOOR & WINDOWS ──
+  {t:"Panoramic Sliding Door — Jushang Hao", c:"Door & Windows", p:"1DKUAL7xltNXkrVc6RszgFxK0exijLYQY"},
+  {t:"Doors & Windows Brochure 2025", c:"Door & Windows", p:"1_g7cfx7SAByPZ99LnFTjYS7AsVtKXcMo"},
+  {t:"Aluminium Door System 2025", c:"Door & Windows", p:"1fhqgd2UObYLH5bRGRhzT9ChU5xXyHvVQ"},
+  {t:"Doors Overview", c:"Door & Windows", p:"1qEuptRsDvYRWd1PxliLCBmGKWATXoBZd"},
+  {t:"Doors", c:"Door & Windows", p:"1hPX7oYxNxnsdkfNQE2MmezDwN31M9es-"},
+  {t:"Slimframe", c:"Door & Windows", p:"1B12oTQ-vondAXGw8m0k-dt5nkiwAgacu"},
+
+  // ── SANITARY ──
+  {t:"Magic Stone Sanitary Ware", c:"Sanitary", p:"1Su2EAnUW2CUFnHEcD1MRkYvSKzU6tIKj"},
+  {t:"Slimframe Shower Screen", c:"Sanitary", p:"11dwTdtanQ0TxWnbJ0wW57-orcgRETeOW"}
+];
+
+const CAT_ORDER = ['Furniture','Lighting','Door & Windows','Sanitary'];
+
+buildStrip(C, CAT_ORDER);
+buildGrid(C);
+filter(C);
+initSearch(C);
+</script>
+</body>
+</html>
