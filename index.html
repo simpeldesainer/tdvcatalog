@@ -204,7 +204,7 @@ const C = [
 ];
 
 // ── THUMBNAIL & PREVIEW URLS ──────────────────────────────────
-const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w480`;
+const thumb = id => `https://drive.google.com/thumbnail?id=${id}&sz=w800`;
 const prev  = id => `https://drive.google.com/file/d/${id}/preview`;
 
 const CAT_ORDER = ['Tiles','Natural Stone','Wood','Leather','Metal','Glass','Wall Covering','Flooring','Acoustic','Outdoor','Decorative','Furniture','Lighting','Door & Windows','Sanitary'];
@@ -236,9 +236,9 @@ function buildGrid(){
     div.dataset.cat=d.c;
     div.dataset.title=d.t.toLowerCase();
     div.onclick=()=>openModal(d);
-    const ti=d.j
-      ?`<img src="${thumb(d.j)}" alt="${esc(d.t)}" loading="lazy" onerror="this.style.display='none'">`
-      :`<div class="ph"><svg width="38" height="46" viewBox="0 0 38 46" fill="none" stroke="#fff" stroke-width="1.3"><rect x="1.5" y="1.5" width="35" height="43" rx="3"/><line x1="9" y1="13" x2="29" y2="13"/><line x1="9" y1="19" x2="29" y2="19"/><line x1="9" y1="25" x2="21" y2="25"/></svg><span>No thumbnail</span></div>`;
+    // Always use PDF's own Drive thumbnail — works for any publicly shared PDF
+    const ph=`<div class="ph"><svg width="38" height="46" viewBox="0 0 38 46" fill="none" stroke="#fff" stroke-width="1.3"><rect x="1.5" y="1.5" width="35" height="43" rx="3"/><line x1="9" y1="13" x2="29" y2="13"/><line x1="9" y1="19" x2="29" y2="19"/><line x1="9" y1="25" x2="21" y2="25"/></svg><span>No thumbnail</span></div>`;
+    const ti=`<img src="${thumb(d.p)}" alt="${esc(d.t)}" loading="lazy" onerror="this.outerHTML=\`${ph}\`">`;
     div.innerHTML=`<div class="thumb">${ti}<div class="grad"></div><div class="ob">View</div></div><div class="meta"><div class="ct">${esc(d.c)}</div><div class="ttl">${esc(d.t)}</div></div>`;
     grid.appendChild(div);
   });
