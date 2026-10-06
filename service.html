@@ -8,6 +8,28 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<style>
+/* Service Card Link Styling to make the entire box clickable and styled consistently */
+a.service-card-clickable {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+a.service-card-clickable:hover {
+  border-color: var(--gold, #9B7848);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+a.service-card-clickable .service-cta {
+  display: inline-block;
+  margin-top: auto;
+}
+</style>
 </head>
 <body>
 <header>
@@ -43,7 +65,8 @@
       <a href="mailto:design@example.com?subject=Shopdrawing Service Inquiry" class="service-cta">Inquire Shopdrawing Service &rarr;</a>
     </div>
 
-    <a href="https://simpeldesainer.github.io/3dtourstatic/" target="_blank" rel="noopener noreferrer" class="service-card service-card-link">
+    <!-- Entire 2. 3D Design & Rendering Service Box as a Clickable Link -->
+    <a href="https://simpeldesainer.github.io/3dtourstatic/" target="_blank" rel="noopener noreferrer" class="service-card service-card-clickable">
       <h2>2. 3D Design & Rendering Service</h2>
       <p>Photorealistic 3D rendering and interior/exterior spatial visualization engineered for client approvals and luxury property marketing.</p>
       <ul class="feature-list">
