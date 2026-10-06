@@ -9,25 +9,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <style>
-/* Service Card Link Styling to make the entire box clickable and styled consistently */
-a.service-card-clickable {
+.service-actions {
   display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-a.service-card-clickable:hover {
-  border-color: var(--gold, #9B7848);
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-}
-
-a.service-card-clickable .service-cta {
-  display: inline-block;
+  gap: 12px;
   margin-top: auto;
+  flex-wrap: wrap;
+}
+
+.service-btn-outline {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #FFFFFF;
+  color: #000000;
+  border: 1px solid var(--gold, #9B7848);
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.service-btn-outline:hover {
+  background: #F0F0F0;
+  border-color: #FFFFFF;
+}
+
+.service-btn-gold {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--gold, #9B7848);
+  color: #FFFFFF;
+  border: none;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.service-btn-gold:hover {
+  background: var(--gold-lt, #B89058);
 }
 </style>
 </head>
@@ -62,11 +89,13 @@ a.service-card-clickable .service-cta {
         <li>Material Schedules & Bill of Quantities (BOQ)</li>
         <li>Site Verification & As-Built Documentation</li>
       </ul>
-      <a href="mailto:design@example.com?subject=Shopdrawing Service Inquiry" class="service-cta">Inquire Shopdrawing Service &rarr;</a>
+      <div class="service-actions">
+        <a href="https://wa.me/6583110213?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20your%20Shopdrawing%20Services." target="_blank" rel="noopener noreferrer" class="service-btn-gold">Contact Us</a>
+      </div>
     </div>
 
-    <!-- Entire 2. 3D Design & Rendering Service Box as a Clickable Link -->
-    <a href="https://simpeldesainer.github.io/3dtourstatic/" target="_blank" rel="noopener noreferrer" class="service-card service-card-clickable">
+    <!-- 2. 3D Design & Rendering Service Card with dual action buttons -->
+    <div class="service-card">
       <h2>2. 3D Design & Rendering Service</h2>
       <p>Photorealistic 3D rendering and interior/exterior spatial visualization engineered for client approvals and luxury property marketing.</p>
       <ul class="feature-list">
@@ -76,8 +105,11 @@ a.service-card-clickable .service-cta {
         <li>Conceptual Architectural Modeling</li>
         <li>Walkthrough Animations & Video Presentations</li>
       </ul>
-      <span class="service-cta">Launch 3D Interactive Tour &rarr;</span>
-    </a>
+      <div class="service-actions">
+        <a href="https://simpeldesainer.github.io/3dtourstatic/" target="_blank" rel="noopener noreferrer" class="service-btn-outline">Check Our Portfolio &rarr;</a>
+        <a href="https://wa.me/6583110213?text=Hi%2C%20I%20would%20like%20to%20inquire%20about%20your%203D%20Design%20%26%20Rendering%20Services." target="_blank" rel="noopener noreferrer" class="service-btn-gold">Contact Us</a>
+      </div>
+    </div>
   </div>
 </main>
 </body>
